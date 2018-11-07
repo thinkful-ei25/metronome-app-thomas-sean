@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function Bpm () {
+export default function Bpm (props) {
   return (
-    <p>BPM</p>
+    <p>{props.bpmVal} BPM</p>
   );
 }
