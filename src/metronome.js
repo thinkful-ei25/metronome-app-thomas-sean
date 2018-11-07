@@ -3,20 +3,35 @@ import Bpm from './bpm';
 import Slider from './slider';
 import Playbutton from './playbutton';
 
-let audio = new Audio('http://freesound.org/data/previews/60/60604_701086-lq.mp3'); 
+let audio = new Audio('http://freesound.org/data/previews/423/423772_8326967-lq.mp3'); 
 export default class Metronome extends React.Component{
   constructor(props){ 
 
     super(props); 
     this.state = { 
       bpm : 120,
-      transport: false
+      transport: false,
+      interval: null
+
     }
   }
 
   playAudio(){
-    if(this.state.transport === true)audio.play();
-    else audio.pause();  
+    const time = 60000 / this.state.bpm;
+    console.log(time)
+    if(this.state.transport) {
+      this.setState({interval: setInterval(this.myCallback, time)})
+    }
+    
+    if(!this.state.transport) {
+      clearInterval(this.state.interval);
+      audio.pause();
+    } 
+  }
+
+  myCallback() {
+    console.log('test')
+    audio.play();
   }
 
   setTransport(){ 
