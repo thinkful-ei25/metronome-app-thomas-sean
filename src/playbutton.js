@@ -1,7 +1,9 @@
 import React from 'react';
 
-export default function Playbutton() {
+export default function Playbutton(props) {
   return (
-    <p>Play Button</p>
+    <div>
+      <button type='button' onClick={() => props.handleClick()}>Play / Pause</button>
+    </div>
   );
 }

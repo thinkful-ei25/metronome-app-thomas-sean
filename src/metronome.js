@@ -7,7 +7,8 @@ export default class Metronome extends React.Component{
   constructor(props){ 
     super(props); 
     this.state = { 
-      bpm : 120
+      bpm : 120,
+      transport: false
     }
   }
 
@@ -17,7 +18,7 @@ export default class Metronome extends React.Component{
         <h1>Metronome</h1>
         <Bpm bpmVal={this.state.bpm} />
         <Slider handleChange={(val) => this.setState({bpm : val})}/>
-        <Playbutton />
+        <Playbutton handleClick={() => this.setState(prevState => ({transport: !prevState.transport}))}/>
       </div>
     );
   }
