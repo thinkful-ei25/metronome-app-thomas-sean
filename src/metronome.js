@@ -12,15 +12,13 @@ export default class Metronome extends React.Component{
       bpm : 120,
       transport: false,
       interval: null
-
     }
   }
 
   playAudio(){
-    const time = 60000 / this.state.bpm;
-    console.log(time)
     if(this.state.transport) {
-      this.setState({interval: setInterval(this.myCallback, time)})
+      this.setState({interval: setInterval(this.myCallback, 
+      this.convertBPMToSeconds(this.state.bpm))})
     }
     
     if(!this.state.transport) {
@@ -38,12 +36,23 @@ export default class Metronome extends React.Component{
     this.setState({transport : !this.state.transport}, () => this.playAudio());
   }
 
+  handleBPM(val) { 
+    this.setState({bpm : val}, () => { 
+      clearInterval(this.state.interval); 
+      this.playAudio()
+    });
+  }
+
+  convertBPMToSeconds(bpm){ 
+    return 60000/bpm; 
+  }
+
   render(){
     return (
       <div>
         <h1>Metronome</h1>
         <Bpm bpmVal={this.state.bpm} />
-        <Slider handleChange={(val) => this.setState({bpm : val})}/>
+        <Slider handleChange={(val) => this.handleBPM(val)}/>
         <Playbutton  value={(this.state.transport) ? 'Pause' : 'Play'} 
         handleClick={() =>  this.setTransport()}/>
       </div>
